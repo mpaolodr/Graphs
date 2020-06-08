@@ -47,23 +47,57 @@ class Graph:
         Print each vertex in breadth-first order
         beginning from starting_vertex.
         """
-        pass  # TODO
+        q = Queue()
+        visited = set()
+
+        q.enqueue(starting_vertex)
+
+        while q.size() > 0:
+            vert = q.dequeue()
+
+            if vert not in visited:
+                print(vert)
+                visited.add(vert)
+
+                for nbr in self.get_neighbors(vert):
+                    q.enqueue(nbr)
 
     def dft(self, starting_vertex):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
         """
-        pass  # TODO
+        s = Stack()
+        visited = set()
 
-    def dft_recursive(self, starting_vertex):
+        s.push(starting_vertex)
+
+        while s.size() > 0:
+            vert = s.pop()
+
+            if vert not in visited:
+                print(vert)
+                visited.add(vert)
+
+                for nbr in self.get_neighbors(vert):
+                    s.push(nbr)
+
+    def dft_recursive(self, starting_vertex, visited=None):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
 
         This should be done using recursion.
         """
-        pass  # TODO
+        if not visited:
+            visited = set()
+
+        if starting_vertex not in visited:
+            print(starting_vertex)
+            visited.add(starting_vertex)
+
+            for nbr in self.get_neighbors(starting_vertex):
+                self.dft_recursive(nbr, visited)
 
     def bfs(self, starting_vertex, destination_vertex):
         """
