@@ -53,22 +53,36 @@ class Graph:
 
         return self.vertices[vertex_id]
 
-    def bft(self, starting_vertex):
+    def get_levels(self, starting_vertex):
         """
         Print each vertex in breadth-first order
         beginning from starting_vertex.
         """
+        level_dict = dict()
+        level = [None] * (max(self.vertices) + 1)
+
         q = Queue()
         visited = set()
 
         q.enqueue(starting_vertex)
 
+        # level of starting vertex
+        level[starting_vertex] = 0
+        visited.add(starting_vertex)
+
         while q.size() > 0:
             vert = q.dequeue()
 
-            if vert not in visited:
-                print(vert)
-                visited.add(vert)
+            for nbr in self.get_neighbors(vert):
 
-                for nbr in self.get_neighbors(vert):
+                if nbr not in visited:
                     q.enqueue(nbr)
+                    level[nbr] = level[vert] + 1
+
+                    visited.add(nbr)
+
+        for i in range(1, max(self.vertices) + 1):
+            if level[i] is not None:
+                level_dict[i] = level[i]
+
+        return level_dict
