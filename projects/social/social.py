@@ -89,6 +89,8 @@ class SocialGraph:
                 for friend in self.friendships[user]:
                     q.enqueue(friend)
 
+        return network
+
     # function to get paths from user_id to each user in network list
     def dfs(self, fromUser, toUser):
         s = Stack()
@@ -122,6 +124,12 @@ class SocialGraph:
         """
         visited = {}  # Note that this is a dictionary, not a set
         # !!!! IMPLEMENT ME
+
+        # create keys in visited for each user in user_id's extended network
+        for user in self.bft(user_id):
+            # for each user, value will be path from user_id to each keys
+            visited[user] = self.dfs(user_id, user)
+
         return visited
 
 
@@ -129,5 +137,6 @@ if __name__ == '__main__':
     sg = SocialGraph()
     sg.populate_graph(10, 2)
     print(sg.friendships)
+    print(sg.bft(1))
     connections = sg.get_all_social_paths(1)
     print(connections)
