@@ -1,4 +1,5 @@
 from random import shuffle
+from util import Queue, Stack
 
 
 class User:
@@ -65,6 +66,29 @@ class SocialGraph:
             friendship = possible_friendships[i]
 
             self.add_friendship(friendship[0], friendship[1])
+
+    # function to return extended network list that I can loop to create keys for my result dictionary
+
+    def bft(self, vertex):
+        q = Queue()
+        visited = set()
+
+        q.enqueue(vertex)
+
+        # extended network of given vertex
+        network = []
+
+        while q.size() > 0:
+            user = q.dequeue()
+
+            if user not in visited:
+                visited.add(user)
+
+                # append user to network list that'll represent extended network of vertex(user_id)
+                network.append(user)
+
+                for friend in self.friendships[user]:
+                    q.enqueue(friend)
 
     def get_all_social_paths(self, user_id):
         """
