@@ -1,5 +1,5 @@
 from random import shuffle
-from util import Queue, Stack
+from util import Queue
 
 
 class User:
@@ -92,14 +92,14 @@ class SocialGraph:
         return network
 
     # function to get paths from user_id to each user in network list
-    def dfs(self, fromUser, toUser):
-        s = Stack()
+    def bfs(self, fromUser, toUser):
+        q = Queue()
         visited = set()
 
-        s.push([fromUser])
+        q.enqueue([fromUser])
 
-        while s.size() > 0:
-            path = s.pop()
+        while q.size() > 0:
+            path = q.dequeue()
             user = path[-1]
 
             if user == toUser:
@@ -111,7 +111,7 @@ class SocialGraph:
                 for friend in self.friendships[user]:
                     new_path = list(path)
                     new_path.append(friend)
-                    s.push(new_path)
+                    q.enqueue(new_path)
 
     def get_all_social_paths(self, user_id):
         """
@@ -128,7 +128,7 @@ class SocialGraph:
         # create keys in visited for each user in user_id's extended network
         for user in self.bft(user_id):
             # for each user, value will be path from user_id to each keys
-            visited[user] = self.dfs(user_id, user)
+            visited[user] = self.bfs(user_id, user)
 
         return visited
 
@@ -138,5 +138,5 @@ if __name__ == '__main__':
     sg.populate_graph(10, 2)
     print(sg.friendships)
     print(sg.bft(1))
-    connections = sg.get_all_social_paths(1)
+    connections = sg.get_all_social_paths(5)
     print(connections)

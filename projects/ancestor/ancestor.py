@@ -40,4 +40,3 @@ def earliest_ancestor(ancestors, starting_node):
         return node_list[0]
     else:
         return -1
-
