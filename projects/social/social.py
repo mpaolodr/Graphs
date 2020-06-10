@@ -68,7 +68,6 @@ class SocialGraph:
             self.add_friendship(friendship[0], friendship[1])
 
     # function to return extended network list that I can loop to create keys for my result dictionary
-
     def bft(self, vertex):
         q = Queue()
         visited = set()
@@ -89,6 +88,28 @@ class SocialGraph:
 
                 for friend in self.friendships[user]:
                     q.enqueue(friend)
+
+    # function to get paths from user_id to each user in network list
+    def dfs(self, fromUser, toUser):
+        s = Stack()
+        visited = set()
+
+        s.push([fromUser])
+
+        while s.size() > 0:
+            path = s.pop()
+            user = path[-1]
+
+            if user == toUser:
+                return path
+
+            if user not in visited:
+                visited.add(user)
+
+                for friend in self.friendships[user]:
+                    new_path = list(path)
+                    new_path.append(friend)
+                    s.push(new_path)
 
     def get_all_social_paths(self, user_id):
         """
