@@ -132,11 +132,47 @@ class SocialGraph:
 
         return visited
 
+    # Chris Solution
+
+    # def get_neighbors(self, user_id):
+    #     """
+    #     Get all friends/neighbors (edges) of a vertex/user.
+    #     """
+    #     return self.friendships[user_id]
+
+    # def get_all_social_paths(self, user_id):
+    #     """
+    #     Takes a user's user_id as an argument
+    #     Returns a dictionary containing every user in that user's
+    #     extended network with the shortest friendship path between them.
+    #     The key is the friend's ID and the value is the path.
+    #     """
+    #     visited = {}  # Note that this is a dictionary, not a set
+    #     # !!!! IMPLEMENT ME
+    #     q = Queue()
+    #     q.enqueue([user_id])
+
+    #     while q.size() > 0:
+
+    #         path = q.dequeue()
+    #         last_id = path[-1]
+
+    #         if last_id not in visited:
+    #             visited[last_id] = path
+    #         for next_id in self.get_neighbors(last_id):
+    #             neighbor_path = path.copy()
+    #             neighbor_path.append(next_id)
+
+    #             q.enqueue(neighbor_path)
+
+    #     return visited
+
 
 if __name__ == '__main__':
     sg = SocialGraph()
+
     sg.populate_graph(10, 2)
     print(sg.friendships)
-    print(sg.bft(1))
+
     connections = sg.get_all_social_paths(5)
     print(connections)
